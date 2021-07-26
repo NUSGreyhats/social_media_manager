@@ -2,7 +2,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome import options
 
-def post(path:str, caption:str, username:str, password:str):
+def post(img_path:str, caption:str, username:str, password:str):
     """Post a post on instagram"""
 
     # Open the chrome driver
@@ -18,7 +18,7 @@ def post(path:str, caption:str, username:str, password:str):
     driver.find_element_by_css_selector('#react-root > section > main > article > div > div > div > div.AC7dP.Igw0E.IwRSH.pmxbr.eGOV_._4EzTm.gKUEf > button:nth-child(1)').click()
 
     # Click on the login button
-    # driver.find_element_by_css_selector("#react-root > section > main > article > div > div > div > div:nth-child(2) > button").click()
+    driver.find_element_by_css_selector("#react-root > section > main > article > div > div > div > div:nth-child(2) > button").click()
 
     print("Logging in")
 
@@ -64,7 +64,7 @@ def post(path:str, caption:str, username:str, password:str):
     post_btn.click()
 
     send_img = driver.find_element_by_css_selector("#react-root > section > nav.NXc7H.f11OC > div > div > form > input")
-    send_img.send_keys(path)
+    send_img.send_keys(img_path)
 
     sleep(1)
 
