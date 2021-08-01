@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% set active = '/telegram' %}
+{% block title %}Telegram Bot{% endblock %}
+{% block body %}
+<h1>Create an Telegram Message</h1>
+<form method="POST" enctype=multipart/form-data>
+    <div class="mb-3">
+        <label for="inputToken" class="form-label">Bot API Token</label>
+        <input type="text" class="form-control" id="inputToken" aria-describedby="tokenHelp" name="api_token">
+        <div id="tokenHelp" class="form-text">API token from Bot father</div>
+    </div>
+    <div class="mb-3">
+        <label for="inputPassword" class="form-label">Group Id</label>
+        <input type="text" class="form-control" id="inputPassword" name="group_id">
+    </div>
+    <div class="mb-3">
+        <label for="inputCaption" class="form-label">Message</label>
+        <textarea type="text" class="form-control" rows="5" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-lg" id="inputCaption" name="message"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

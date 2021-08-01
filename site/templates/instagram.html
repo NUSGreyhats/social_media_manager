@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% set active = '/instagram' %}
+{% block title %}Instagram Bot{% endblock %}
+{% block body %}
+<h1>Create an Instagram Post</h1>
+<form method="POST" enctype=multipart/form-data>
+    <div class="mb-3">
+        <label for="inputEmail1" class="form-label">Email address / Username</label>
+        <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp" name="username">
+        <div id="emailHelp" class="form-text">Username or email used to login into the account</div>
+    </div>
+    <div class="mb-3">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword" name="password">
+    </div>
+    <div class="mb-3">
+        <label for="inputCaption" class="form-label">Caption</label>
+        <textarea type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-lg" id="inputCaption" name="caption"></textarea>
+    </div>
+    <div class="mb-3">
+        <input type="file" data-browse-on-zone-click="true" name="file">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}
