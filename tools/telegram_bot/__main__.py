@@ -10,5 +10,8 @@ if __name__ == "__main__":
     r = bot.get_message()
     print(r)
 
-    s = bot.send_message("hello world", GROUP_ID)
+    # s = bot.send_message("hello world", GROUP_ID)
+    # print(s)
+
+    s = bot.send_image("Test image post", GROUP_ID, r"D:\Downloads\greycat.jpg")
     print(s)
