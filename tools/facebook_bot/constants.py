@@ -1,1 +1,1 @@
-FACEBOOK_GROUP_URL = "https://graph.facebook.com/{group_id}}/feed"
+FACEBOOK_GROUP_URL = "https://graph.facebook.com/{group_id}/feed"
