@@ -2,8 +2,9 @@ import json
 import requests
 from util import make_get_url, make_send_url, make_img_url
 
+
 class TelegramBot(object):
-    def __init__(self, token:str):
+    def __init__(self, token: str):
         self.token = token
 
     def get_message(self) -> list:
@@ -14,13 +15,13 @@ class TelegramBot(object):
             return []
         return json.loads(resp.content)
 
-    def send_message(self, message:str, group_id: str) -> int:
+    def send_message(self, message: str, group_id: str):
         url = make_send_url(message, self.token, group_id)
         resp = requests.post(url)
-        return resp.status_code
-    
-    def send_image(self, message: str, group_id: str, image_path:str) -> int:
+        return resp
+
+    def send_image(self, message: str, group_id: str, image_path: str):
         url = make_img_url(message, self.token, group_id)
         with open(image_path, 'rb') as f:
-            resp = requests.post(url, files={"photo":f})
-        return resp.status_code
+            resp = requests.post(url, files={"photo": f})
+        return resp
