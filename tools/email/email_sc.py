@@ -2,7 +2,7 @@ import smtplib
 import csv
 import pprint
 
-from .constants import EMAIL_ADDRESS, PASSWORD, SEND_ADDRESS, SMTP_HOST, SMTP_PORT, BODY
+from constants import EMAIL_ADDRESS, PASSWORD, SEND_ADDRESS, SMTP_HOST, SMTP_PORT, BODY
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -10,8 +10,8 @@ from email.mime.text import MIMEText
 def create_email(email: list, send_addr: str, body: str):
     msg = MIMEMultipart()
     msg['From'] = send_addr
-    msg['To'] = ", ".join([email])
-    msg['Cc'] = ", ".join([send_addr])
+    msg['To'] = ", ".join(email)
+    msg['Cc'] = ""
     msg['Subject'] = "RE: Application for NUS Greyhats"
     msg.attach(MIMEText(body))
     return msg
@@ -26,9 +26,6 @@ def send_mail(server, send_addr, to_email, msg):
 
 
 def generate_receipient_list(filename):
-    # Init a list
-    lst = []
-
     # Open the file
     with open(filename, "r") as file:
 
@@ -37,12 +34,12 @@ def generate_receipient_list(filename):
 
         # Remove the header
         next(reader, None)  # skip the headers
-        return [(name.strip(), email.strip()) for name, email in reader]
+        return [email for email in reader]
 
 
 def main():
 
-    recipients = generate_receipient_list("receipients.csv")
+    recipients = generate_receipient_list("recipients.csv")
 
     # Print receipients
     pprint.pprint(recipients)
@@ -64,13 +61,12 @@ def main():
     print(server.login(EMAIL_ADDRESS, PASSWORD))
 
     # Iterate through the names
-    for name, email in recipients:
+    for email in recipients:
         # Create the email
-        body = BODY.format(name=name)
-        msg = create_email(email, SEND_ADDRESS, body)
+        msg = create_email(email, SEND_ADDRESS, BODY)
 
         # Send email
-        print(f"Sending email to {name}: {email}")
+        print(f"Sending email to {email}")
         send_mail(server, SEND_ADDRESS, email, msg)
 
     # Quit the mail server
