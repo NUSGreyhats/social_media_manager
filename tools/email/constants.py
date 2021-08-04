@@ -1,6 +1,7 @@
 EMAIL_ADDRESS = r""
 PASSWORD = ""
 SEND_ADDRESS = "recruit@nusgreyhats.org"
+SUBJECT = "Application for Welcome CTF"
 SMTP_HOST = 'smtp.zoho.com'
 SMTP_PORT = 465
 BODY = """Dear {name},
