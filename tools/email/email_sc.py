@@ -2,7 +2,7 @@ import smtplib
 import csv
 import pprint
 
-from constants import EMAIL_ADDRESS, PASSWORD, SEND_ADDRESS, SMTP_HOST, SMTP_PORT, BODY
+from constants import EMAIL_ADDRESS, PASSWORD, SEND_ADDRESS, SMTP_HOST, SMTP_PORT, BODY, SUBJECT
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -12,7 +12,7 @@ def create_email(email: list, send_addr: str, body: str):
     msg['From'] = send_addr
     msg['To'] = ", ".join(email)
     msg['Cc'] = ""
-    msg['Subject'] = "RE: Application for NUS Greyhats"
+    msg['Subject'] = SUBJECT
     msg.attach(MIMEText(body))
     return msg
 
