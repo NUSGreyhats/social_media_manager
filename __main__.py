@@ -2,15 +2,22 @@
 import os
 import configparser
 from flask import Flask, render_template, request, redirect, flash, Response
+from werkzeug.utils import secure_filename
 
-from constants import ERROR_FLASH, FACEBOOK, IMAGE_KEY, INFO_FLASH, SOCIAL_MEDIA, HOME_PAGE, SELECT_AT_LEAST_ONE_SOCIAL_MEDIA, SUCCESS_MESSAGE, EMPTY_CONTENT, CONTENT_KEY, EMPTY_STRING, DEFAULT_CONFIG_FILE, TELEGRAM, TWITTER
+from constants import ERROR_FLASH, FACEBOOK, IMAGE_KEY, INFO_FLASH, SOCIAL_MEDIA, HOME_PAGE, SELECT_AT_LEAST_ONE_SOCIAL_MEDIA, SUCCESS_MESSAGE, EMPTY_CONTENT, CONTENT_KEY, EMPTY_STRING, DEFAULT_CONFIG_FILE, TELEGRAM, TWITTER, UPLOAD_FOLDER 
 from tools import post_to_twitter
 from tools.post import post_to_facebook, post_to_telegram
 
 
 app = Flask(__name__)
 app.secret_key = os.urandom(128).hex()
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 credentials = None
+func_dict = {
+    FACEBOOK: post_to_facebook,
+    TWITTER: post_to_twitter,
+    TELEGRAM: post_to_telegram,
+}
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -24,6 +31,15 @@ def index() -> Response:
         flash(EMPTY_CONTENT, ERROR_FLASH)
         return redirect(HOME_PAGE)
 
+    image = request.files.get(IMAGE_KEY, None)
+    img_path = None
+
+    if image is not None and image.filename != EMPTY_STRING:
+        filename = secure_filename(image.filename)
+        img_path = os.path.join(UPLOAD_FOLDER, filename)
+        image.save(img_path)
+
+
     # Check if user picked at least one social media.
     to_post = set()
     for attr in request.form:
@@ -35,26 +51,17 @@ def index() -> Response:
         return redirect(HOME_PAGE)
 
     # Logic for posting items to social media.
-    if TWITTER in to_post:
-        post_to_twitter(
-            **credentials[TWITTER],
-            content=request.form.get(CONTENT_KEY),
-            image=request.files.get(IMAGE_KEY),
-        )
-
-    if FACEBOOK in to_post:
-        post_to_facebook(
-            **credentials[FACEBOOK],
+    for post_type in to_post:
+        func = func_dict[post_type]
+        func(
+            **credentials[post_type],
             message=request.form.get(CONTENT_KEY),
-            image=request.files.get(IMAGE_KEY),
+            image=img_path,
         )
-
-    if TELEGRAM in to_post:
-        post_to_telegram(
-            **credentials[TELEGRAM],
-            message=request.form.get(CONTENT_KEY),
-            image=request.files.get(IMAGE_KEY),
-        )
+    
+    # Remove the image after posting
+    if img_path is not None:
+        os.remove(img_path)
 
     flash(SUCCESS_MESSAGE, INFO_FLASH)
     return redirect(HOME_PAGE)
@@ -87,4 +94,9 @@ if __name__ == "__main__":
         create_default_config()
     credentials = configparser.ConfigParser()
     credentials.read(DEFAULT_CONFIG_FILE)
+
+    # Check if upload folder exists
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.mkdir(UPLOAD_FOLDER)
+
     app.run(debug=False)

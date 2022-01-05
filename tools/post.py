@@ -1,13 +1,13 @@
 from . import TwitterBot, TelegramBot, FacebookBot
 
 
-def post_to_twitter(api_key: str, api_secret: str, access_token: str, access_token_secret: str, content: str, image: str = None, **kwargs) -> None:
+def post_to_twitter(api_key: str, api_secret: str, access_token: str, access_token_secret: str, message: str, image: str = None, **kwargs) -> None:
     """Post to Twitter with an optional image"""
     bot = TwitterBot(api_key, api_secret, access_token, access_token_secret)
     if image is None:
-        bot.tweet_message(content)
+        bot.tweet_message(message)
     else:
-        bot.tweet_image(content, image)
+        bot.tweet_image(message, image)
 
 
 def post_to_telegram(token: str, group_id: str, message: str, image: str = None, **kwargs) -> None:

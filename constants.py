@@ -16,6 +16,7 @@ HOME_PAGE = "/"
 CONTENT_KEY = "content"
 IMAGE_KEY = "image"
 EMPTY_STRING = ""
+UPLOAD_FOLDER = "uploads"
 
 DEFAULT_CONFIG_FILE = "config.ini"
 

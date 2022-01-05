@@ -20,10 +20,14 @@
         <li class="list-group-item">Fill up information to be sent</li>
         <li class="list-group-item">Submit the form and the info will be sent</li>
     </ol>
-    <form action="/" method="post">
+    <form action="/" method="post" enctype=multipart/form-data>
         <div class="mb-3">
             <label for="content" class="form-label">Post content</label>
             <textarea class="form-control" id="content" rows="3" name="content"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Upload Image</label>
+            <input class="form-control" type="file" id="formFile" name="image">
         </div>
         <div class="mb-3">
             <label for="media" class="form-label">Media</label>
@@ -31,7 +35,7 @@
             {{ insert_checkbox('Facebook', 'facebook') }}
             {{ insert_checkbox('Telegram', 'telegram') }}
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" value="upload">Submit</button>
     </form>
 </div>
 {% endblock %}
