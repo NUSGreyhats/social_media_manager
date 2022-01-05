@@ -1,0 +1,37 @@
+{% extends 'nav.html' %}
+{% block title %} Social Media Manager {% endblock %}
+{% macro insert_checkbox(name, form_value) %}
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="{{form_value}}"/>
+    <label class="form-check-label" for="flexCheckDefault">
+        {{name}}
+    </label>
+</div>
+{% endmacro %}
+{% block content %}
+<div class="container">
+    <h1 class="display-2">Social Media Manager</h1>
+    <p class="lead">
+        Before you fill in this form please make sure that all the API keys for the relevant services are updated.
+    </p>
+    <h1 class="display-4">How to use this</h1>
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item">Update API keys</li>
+        <li class="list-group-item">Fill up information to be sent</li>
+        <li class="list-group-item">Submit the form and the info will be sent</li>
+    </ol>
+    <form action="/" method="post">
+        <div class="mb-3">
+            <label for="content" class="form-label">Post content</label>
+            <textarea class="form-control" id="content" rows="3" name="content"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="media" class="form-label">Media</label>
+            {{ insert_checkbox('Twitter', 'twitter') }}
+            {{ insert_checkbox('Facebook', 'facebook') }}
+            {{ insert_checkbox('Telegram', 'telegram') }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

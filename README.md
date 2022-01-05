@@ -5,7 +5,7 @@ A Tool to help post on various social media simultaneously
 Todo:
 - [ ] Add support for the following
     - [ ] Telegram
-    - [ ] Instagram
+    - [ ] Twitter
     - [ ] Facebook
     - [ ] Discord
 - [ ] Support for mass sending emails following template
