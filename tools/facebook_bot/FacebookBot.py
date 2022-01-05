@@ -1,4 +1,3 @@
-import requests
 from secrets import TOKEN
 from facebook import GraphAPI
 
