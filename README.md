@@ -39,6 +39,6 @@ A Tool to help post on various social media simultaneously
 ## Todo:
 - [ ] Add support for the following
     - [x] Telegram
-    - [ ] Twitter
-    - [ ] Facebook
+    - [ ] Twitter (To be tested)
+    - [x] Facebook
 - [ ] Support for mass sending emails following template
