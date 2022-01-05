@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, redirect, flash, Response
 
 from constants import ERROR_FLASH, FACEBOOK, IMAGE_KEY, INFO_FLASH, SOCIAL_MEDIA, HOME_PAGE, SELECT_AT_LEAST_ONE_SOCIAL_MEDIA, SUCCESS_MESSAGE, EMPTY_CONTENT, CONTENT_KEY, EMPTY_STRING, DEFAULT_CONFIG_FILE, TELEGRAM, TWITTER
 from tools import post_to_twitter
+from tools.post import post_to_facebook, post_to_telegram
 
 
 app = Flask(__name__)
@@ -38,14 +39,22 @@ def index() -> Response:
         post_to_twitter(
             **credentials[TWITTER],
             content=request.form.get(CONTENT_KEY),
-            image=request.files.get(IMAGE_KEY)
+            image=request.files.get(IMAGE_KEY),
         )
 
     if FACEBOOK in to_post:
-        pass
+        post_to_facebook(
+            **credentials[FACEBOOK],
+            message=request.form.get(CONTENT_KEY),
+            image=request.files.get(IMAGE_KEY),
+        )
 
     if TELEGRAM in to_post:
-        pass
+        post_to_telegram(
+            **credentials[TELEGRAM],
+            message=request.form.get(CONTENT_KEY),
+            image=request.files.get(IMAGE_KEY),
+        )
 
     flash(SUCCESS_MESSAGE, INFO_FLASH)
     return redirect(HOME_PAGE)
@@ -66,7 +75,7 @@ def create_default_config() -> None:
         "group_id": "",
     }
     config["telegram"] = {
-        "api_token": "",
+        "token": "",
         "group_id": "",
     }
     with open(DEFAULT_CONFIG_FILE, 'w') as configfile:

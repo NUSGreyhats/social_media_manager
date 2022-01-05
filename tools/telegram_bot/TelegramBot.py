@@ -1,6 +1,6 @@
 import json
 import requests
-from util import make_get_url, make_send_url, make_img_url
+from .util import make_get_url, make_send_url, make_img_url
 
 
 class TelegramBot(object):

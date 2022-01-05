@@ -1,5 +1,5 @@
 from urllib.parse import quote_plus
-from constants import TELEGRAM_GET_ENDPOINT, TELEGRAM_SEND_ENDPOINT, TELEGRAM_SEND_PHOTO_ENDPOINT
+from .constants import TELEGRAM_GET_ENDPOINT, TELEGRAM_SEND_ENDPOINT, TELEGRAM_SEND_PHOTO_ENDPOINT
 
 
 def make_get_url(token: str) -> str:
