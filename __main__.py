@@ -45,8 +45,8 @@ def index() -> Response:
     for attr in request.form:
         if attr in SOCIAL_MEDIA:
             to_post.add(attr)
-            break
-    else:
+
+    if len(to_post) == 0:
         flash(SELECT_AT_LEAST_ONE_SOCIAL_MEDIA, ERROR_FLASH)
         return redirect(HOME_PAGE)
 
