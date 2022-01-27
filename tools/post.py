@@ -28,3 +28,4 @@ def post_to_facebook(token: str, group_id: str, message: str, image: str = None,
         bot.post_to_group(message, group_id)
     else:
         bot.post_img_to_group(image, group_id, message)
+    

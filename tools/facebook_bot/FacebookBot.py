@@ -8,7 +8,7 @@ class FacebookBot(object):
 
     def post_to_group(self, message: str, group_id: str):
         """Make a post to a group with just an image"""
-        self.graph.put_object(group_id, 'feed', message=message, )
+        self.graph.put_object(group_id, 'feed', message=message)
         print(self.graph.get_connections(group_id, 'feed'))
 
     def post_img_to_group(self, img_path: str, group_id: str, message: str):
