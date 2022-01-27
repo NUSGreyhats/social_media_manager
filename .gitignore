@@ -115,3 +115,6 @@ dmypy.json
 
 # Ignore config files
 config.ini
+
+# VSCode
+.vscode/
