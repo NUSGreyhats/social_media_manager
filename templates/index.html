@@ -2,7 +2,7 @@
 {% block title %} Social Media Manager {% endblock %}
 {% macro insert_checkbox(name, form_value) %}
 <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="{{form_value}}"/>
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="{{form_value}}" />
     <label class="form-check-label" for="flexCheckDefault">
         {{name}}
     </label>
@@ -20,6 +20,13 @@
         <li class="list-group-item">Fill up information to be sent</li>
         <li class="list-group-item">Submit the form and the info will be sent</li>
     </ol>
+    <br />
+    <h1 class="display-3">Note for Markdown Support</h1>
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item">Telegram Supports Markdown.</li>
+        <li class="list-group-item">Facebook does not support Markdown.</li>
+    </ol>
+    <br />
     <form action="/" method="post" enctype=multipart/form-data>
         <div class="mb-3">
             <label for="content" class="form-label">Post content</label>
