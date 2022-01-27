@@ -23,8 +23,8 @@ A Tool to help post on various social media simultaneously
 2. Go to [https://developers.facebook.com/](https://developers.facebook.com/) and create a developer account
 3. Create an application
 4. Go to [https://developers.facebook.com/tools/explorer/](https://developers.facebook.com/tools/explorer/) and generate an user token
-5. For facebook group ids follow the tutorial [here](https://www.slickremix.com/how-to-get-your-facebook-group-id/)
-6. Give `pubish_to_group` permission to the application
+5. Give `pubish_to_group` permission to the application
+6. For facebook group ids follow the tutorial [here](https://www.slickremix.com/how-to-get-your-facebook-group-id/)
 
 
 ### Telegram
@@ -37,9 +37,3 @@ A Tool to help post on various social media simultaneously
    3. click 'inspect' button
    4. You will see the group id in the attribute data-peer-id="-xxxxxxxxxx" or peer="-xxxxxxxxxx"
 
-## Todo:
-- [ ] Add support for the following
-    - [x] Telegram
-    - [ ] Twitter (To be tested)
-    - [x] Facebook
-- [ ] Support for mass sending emails following template
