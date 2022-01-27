@@ -27,6 +27,8 @@ def index() -> Response:
     if request.method == "GET":
         return render_template('index.html')
 
+    is_success = True
+
     # Check if the content is empty
     if len(request.form.get(CONTENT_KEY, EMPTY_STRING)) == 0:
         flash(EMPTY_CONTENT, ERROR_FLASH)
@@ -53,18 +55,23 @@ def index() -> Response:
 
     # Logic for posting items to social media.
     for post_type in to_post:
-        func = func_dict[post_type]
-        func(
-            **credentials[post_type],
-            message=request.form.get(CONTENT_KEY),
-            image=img_path,
-        )
+        try:
+            func = func_dict[post_type]
+            func(
+                **credentials[post_type],
+                message=request.form.get(CONTENT_KEY),
+                image=img_path,
+            )
+        except Exception as e:
+            flash(f"Error posting to {post_type}: {e}", ERROR_FLASH)
+            is_success = False
     
     # Remove the image after posting
     if img_path is not None:
         os.remove(img_path)
 
-    flash(SUCCESS_MESSAGE, INFO_FLASH)
+    if is_success:
+        flash(SUCCESS_MESSAGE, INFO_FLASH)
     return redirect(HOME_PAGE)
 
 
