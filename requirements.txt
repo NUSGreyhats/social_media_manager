@@ -1,0 +1,3 @@
+tweepy
+facebook-sdk
+flask
