@@ -15,8 +15,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 credentials = None
 func_dict = {
     FACEBOOK: post_to_facebook,
-    TWITTER: post_to_twitter,
     TELEGRAM: post_to_telegram,
+
+    # TWITTER: post_to_twitter,
 }
 
 
@@ -70,13 +71,13 @@ def index() -> Response:
 def create_default_config() -> None:
     """Create a default configuration file"""
     config = configparser.ConfigParser()
-    config["twitter"] = {
-        "api_key": "",
-        "api_secret": "",
-        "access_token": "",
-        "access_token_secret": "",
-        "bearer_token": "",
-    }
+    # config["twitter"] = {
+    #     "api_key": "",
+    #     "api_secret": "",
+    #     "access_token": "",
+    #     "access_token_secret": "",
+    #     "bearer_token": "",
+    # }
     config["facebook"] = {
         "token": "",
         "group_id": "",
