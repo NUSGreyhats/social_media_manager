@@ -17,16 +17,11 @@
     <h1 class="display-3">Notes for Email</h1>
     <ol class="list-group list-group-numbered">
         <li class="list-group-item">Please fill in all fields</li>
-        <li class="list-group-item">CSV in the form of |Email| ...Other fields |</li>
+        <li class="list-group-item">CSV must contain the column email</li>
+        <li class="list-group-item">It allows data interpolation via csv headers. IE: If there is a csv header called "hello world", you can use {hello world} to replace it with the value that is in the row</li>
+        <li class="list-group-item">Those {values} which are not found will be left untouched</li>
     </ol>
     <br />
-    <h1 class="display-3">Value interpolation for email</h1>
-    <p class="lead"></p>
-        <br />
-        Any {email} that is used within the subject and the body will be replaced with the value of the corresponding field.
-
-        To create more interpolated fields, just different headers to the columns to of CSV header. Each CSV header will be interpreted as another value to be interpolated. Please note that any HTML will be sanitised
-    </p>
     <form action="/email" method="post" enctype=multipart/form-data>
         <div class="mb-3">
             <label for="content" class="form-label">Subject</label>

@@ -3,6 +3,7 @@ import logging
 import os
 import configparser
 from flask import Flask, abort, render_template, request, redirect, flash, Response
+from functools import partial
 from werkzeug.utils import secure_filename
 
 from constants import (
@@ -30,6 +31,7 @@ from constants import (
 from tools.post import post_to_facebook, post_to_telegram, post_to_twitter
 from tools.email.email_sc import EmailIntegration, create_email
 from tools.email import extract_csv
+from tools.utils import replace_string
 
 
 # Set up logger
@@ -72,7 +74,12 @@ def email() -> Response:
     body = request.form.get(BODY_KEY, None)
     csv_file = request.files.get(CSV_KEY, None)
 
-    if None in (subject, body, csv_file):
+    if (
+        None in (subject, body, csv_file)
+        or len(subject) == 0
+        or len(body) == 0
+        or len(csv_file.filename) == 0
+    ):
         logging.error("Missing fields")
         flash(EMPTY_CONTENT, ERROR_FLASH)
         return redirect(EMAIL_PAGE)
@@ -82,15 +89,16 @@ def email() -> Response:
 
     # Extract the CSV into a list of dictionaries
     header, data = extract_csv(filepath)
+    os.remove(filepath)
     logging.info(f"Extracted {len(data)} rows from {filepath} with header {header}")
 
     if EMAIL_KEY not in header:
         logging.info("CSV file does not contain an email column")
         flash(f"{CSV_KEY} must contain a column named {EMAIL_KEY}", ERROR_FLASH)
-        os.remove(filepath)
         return redirect(EMAIL_PAGE)
 
     logging.info(f"Sending emails to {len(data)} recipients")
+    # Get all keys
     error_count = 0
     for row in data:
         email = row.get("email", None)
@@ -100,11 +108,17 @@ def email() -> Response:
 
         # Format the email and send
         try:
-            content_subject = subject.format(**row)
-            content_body = body.format(**row)
+            content_subject = replace_string(row, subject)
+            content_body = replace_string(row, body)
         except KeyError as e:
-            flash(f"{e} not found in {BODY_KEY}", ERROR_FLASH)
-            os.remove(filepath)
+            msg = f"{e} not found in {BODY_KEY}"
+            logging.info(msg)
+            flash(msg, ERROR_FLASH)
+            return redirect(EMAIL_PAGE)
+        except Exception as e:
+            msg = f"Error formatting email: {e}"
+            logging.error(f"{msg}. Subject: {subject}, body: {body}")
+            flash(msg, ERROR_FLASH)
             return redirect(EMAIL_PAGE)
 
         mime_email = create_email(
@@ -112,12 +126,12 @@ def email() -> Response:
         )
 
         # Send the email
-        try:
-            email_server.send_email(email, mime_email)
-        except Exception as e:
-            logging.error(f"Failed to send email to {email}: {e}")
-            error_count += 1
-            continue
+        # try:
+        #     email_server.send_email(email, mime_email)
+        # except Exception as e:
+        #     logging.error(f"Failed to send email to {email}: {e}")
+        #     error_count += 1
+        #     continue
 
         logging.info(
             f"Sent email to {email} with subject: {content_subject} and body {content_body}"
@@ -134,7 +148,6 @@ def email() -> Response:
     else:
         logging.info(f"Sent {len(data)} emails")
         flash(SUCCESS_MESSAGE, INFO_FLASH)
-    os.remove(filepath)
     return redirect(EMAIL_PAGE)
 
 
