@@ -126,12 +126,12 @@ def email() -> Response:
         )
 
         # Send the email
-        # try:
-        #     email_server.send_email(email, mime_email)
-        # except Exception as e:
-        #     logging.error(f"Failed to send email to {email}: {e}")
-        #     error_count += 1
-        #     continue
+        try:
+            email_server.send_email(email, mime_email)
+        except Exception as e:
+            logging.error(f"Failed to send email to {email}: {e}")
+            error_count += 1
+            continue
 
         logging.info(
             f"Sent email to {email} with subject: {content_subject} and body {content_body}"
