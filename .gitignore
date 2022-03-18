@@ -115,3 +115,9 @@ dmypy.json
 
 # Ignore config files
 config.ini
+
+# Ignore uploads folder
+uploads/
+
+# VSCode
+.vscode/
