@@ -3,36 +3,63 @@ import logging
 import os
 import configparser
 from flask import Flask, abort, render_template, request, redirect, flash, Response
-from functools import partial
 from werkzeug.utils import secure_filename
 
-from constants import (
-    BODY_KEY,
-    CSV_KEY,
-    EMAIL_KEY,
-    ERROR_FLASH,
-    FACEBOOK,
-    IMAGE_KEY,
-    INFO_FLASH,
-    SOCIAL_MEDIA,
-    HOME_PAGE,
-    SELECT_AT_LEAST_ONE_SOCIAL_MEDIA,
-    SUBJECT_KEY,
-    SUCCESS_MESSAGE,
-    EMPTY_CONTENT,
-    CONTENT_KEY,
-    EMPTY_STRING,
-    DEFAULT_CONFIG_FILE,
-    TELEGRAM,
-    TWITTER,
-    EMAIL_PAGE,
-    UPLOAD_FOLDER,
-)
-from tools.post import post_to_facebook, post_to_telegram, post_to_twitter
-from tools.email.email_sc import EmailIntegration, create_email
-from tools.email import extract_csv
-from tools.utils import replace_string
 
+try:
+    from constants import (
+        BODY_KEY,
+        CSV_KEY,
+        EMAIL_KEY,
+        ERROR_FLASH,
+        FACEBOOK,
+        IMAGE_KEY,
+        INFO_FLASH,
+        SOCIAL_MEDIA,
+        HOME_PAGE,
+        SELECT_AT_LEAST_ONE_SOCIAL_MEDIA,
+        SUBJECT_KEY,
+        SUCCESS_MESSAGE,
+        EMPTY_CONTENT,
+        CONTENT_KEY,
+        EMPTY_STRING,
+        DEFAULT_CONFIG_FILE,
+        TELEGRAM,
+        TWITTER,
+        EMAIL_PAGE,
+        UPLOAD_FOLDER,
+    )
+    from tools.post import post_to_facebook, post_to_telegram, post_to_twitter
+    from tools.email.email_sc import EmailIntegration, create_email
+    from tools.email import extract_csv
+    from tools.utils import replace_string
+except ImportError as e:
+    from .constants import (
+        BODY_KEY,
+        CSV_KEY,
+        EMAIL_KEY,
+        ERROR_FLASH,
+        FACEBOOK,
+        IMAGE_KEY,
+        INFO_FLASH,
+        SOCIAL_MEDIA,
+        HOME_PAGE,
+        SELECT_AT_LEAST_ONE_SOCIAL_MEDIA,
+        SUBJECT_KEY,
+        SUCCESS_MESSAGE,
+        EMPTY_CONTENT,
+        CONTENT_KEY,
+        EMPTY_STRING,
+        DEFAULT_CONFIG_FILE,
+        TELEGRAM,
+        TWITTER,
+        EMAIL_PAGE,
+        UPLOAD_FOLDER,
+    )
+    from .tools.post import post_to_facebook, post_to_telegram, post_to_twitter
+    from .tools.email.email_sc import EmailIntegration, create_email
+    from .tools.email import extract_csv
+    from .tools.utils import replace_string
 
 # Set up logger
 logging.basicConfig(
