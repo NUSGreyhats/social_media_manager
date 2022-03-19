@@ -1,0 +1,7 @@
+EMAIL_ADDRESS = r""
+PASSWORD = ""
+SEND_ADDRESS = ""
+SUBJECT = ""
+SMTP_HOST = ''
+SMTP_PORT = 465
+BODY = """"""

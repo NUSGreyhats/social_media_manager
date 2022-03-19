@@ -1,22 +1,23 @@
 # Social Media Manager
 A Tool to help post on various social media simultaneously
 
+## Features
+1. Posting on the following platforms
+   1. Facebook
+   2. Telegram
+2. Mass sending email
+
 ## Quick Start guide
 1. Install dependencies using `pip install -r requirements.txt`
 2. Start the website by running `python3 flaskr`
 3. Stop the website using `Ctrl+C`
-4. Fill up the configuration under `config.ini`
+4. Fill up the configuration under `config.ini` based on the guide below
 5. Run the server again by running `python3 flaskr`
 6. Navigate to [`http://localhost:5000/`](http://localhost:5000/)
 7. Fill up the form
 
 
 ## Guide to generating tokens for all the relavant settings
-
-### Twitter
-1. Create a twitter account
-2. Request for developer access [here](https://developer.twitter.com/)
-3. Request for elevated access
 
 ### Facebook
 1. Create a facebook account
@@ -37,3 +38,15 @@ A Tool to help post on various social media simultaneously
    3. click 'inspect' button
    4. You will see the group id in the attribute data-peer-id="-xxxxxxxxxx" or peer="-xxxxxxxxxx"
 
+### Email
+1. Find out the follow details in the `config.ini` file
+   1. SMTP host address
+   2. SMTP Port
+   3. Username
+   4. Password
+   5. From email (Sender email to show)
+
+### Twitter (Currently not implemented)
+1. Create a twitter account
+2. Request for developer access [here](https://developer.twitter.com/)
+3. Request for elevated access

@@ -1,0 +1,44 @@
+{% extends 'nav.html' %}
+{% block title %} Email Sender {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-2">Mass Email Sender</h1>
+    <p class="lead">
+        Before you fill in this form please make sure that email configurations are set up.
+    </p>
+    <h1 class="display-4">How to use this</h1>
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item">Update API keys</li>
+        <li class="list-group-item">Fill up information to be sent</li>
+        <li class="list-group-item">Submit the form and the info will be sent</li>
+    </ol>
+    <br />
+    <h1 class="display-3">Notes for Email</h1>
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item">Please fill in all fields</li>
+        <li class="list-group-item">CSV must contain the column email</li>
+        <li class="list-group-item">It allows data interpolation via csv headers. IE: If there is a csv header called "hello world", you can use {hello world} to replace it with the value that is in the row</li>
+        <li class="list-group-item">Those {values} which are not found will be left untouched</li>
+    </ol>
+    <br />
+    <form action="/email" method="post" enctype=multipart/form-data>
+        <div class="mb-3">
+            <label for="content" class="form-label">Subject</label>
+            <textarea class="form-control" id="content" rows="3" name="subject"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">Body</label>
+            <textarea class="form-control" id="content" rows="3" name="body"></textarea>
+        </div>
+        <!-- TODO: List of fields + Recipients + Allow CSV to fill in this-->
+        <div class="mb-3">
+            <label for="formFile" class="form-label">CSV</label>
+            <input class="form-control" type="file" id="formFile" name="csv">
+        </div>
+        <button type="submit" class="btn btn-primary" value="upload">Submit</button>
+    </form>
+</div>
+
+
+{% endblock %}
